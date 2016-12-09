@@ -13,4 +13,4 @@ Het 2de deel bestaat uit het beantwoorden van de 3 vragen. Ik heb deze telkens o
 In de code zelf zijn comments voorzien die duidelijk zullen maken wat waarvoor dient.
 <br><br>
 <b><i>index2.php</i></b><br>
-Zoals hierboven al eerder beschreven heb ik het deel van de orders herschreven. Dit laat toe de map dynamisch uit te lezen, onafhankelijk van de filenames en van het aantal files.
+Zoals hierboven al eerder beschreven heb ik het deel van de orders array herschreven. Dit laat toe de map dynamisch uit te lezen, onafhankelijk van de filenames en van het aantal files.
