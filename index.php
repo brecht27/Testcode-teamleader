@@ -27,6 +27,7 @@ $str3 = file_get_contents('http://www.digital-productions.be/dev/teamleader/exam
 $json3 = json_decode($str3, true); // decoderen van JSON naar een associative array
 $json3b[] = $json3;
 
+//Samenvoegen van de 3 arrays
 $merge = array_merge($json1b, $json2b, $json3b);
 
 echo '<pre>'; 
@@ -51,19 +52,19 @@ foreach($json as $item) {
     
 	if ($item['revenue'] > 1000) {
 		echo '<br>Match gevonden in customers!<br>';
-		echo $item['id']. '<br>';
-		echo $item['name']. '<br>';
-		echo $item['since']. '<br>';
-		echo $item['revenue'] .'<br>';
+		echo 'id: '.$item['id']. '<br>';
+		echo 'name: '.$item['name']. '<br>';
+		echo 'since: '.$item['since']. '<br>';
+		echo 'Revenue: '.$item['revenue'] .'<br>';
 		
 		
 foreach($merge as $m) {
     
     if ($m['customer-id'] == $item['id']) {
 	    echo '<br>Match gevonden in orders!';
-		echo '<br>'.$item['name'];
+		echo '<br>name: '.$item['name'];
 		
-          //Indien total geen item zou zijn in array kan onderstaande gebruikt worden,
+          //Indien [total] geen key zou zijn in array kan onderstaande gebruikt worden,
 		  //deze code zal dan de 3 regels onder deze blok vervangen
 		  //$tot = 0;
 		  //foreach($m['items'] as $it) {
@@ -75,7 +76,7 @@ foreach($merge as $m) {
 		
 		$discount = ($m['total'] * 10) / 100;
 		$new_total = $m['total'] - $discount;
-		echo '<br>'.$new_total;
+		echo '<br>Total with discount: '.$new_total;
     }
 	
 } // End foreach 'merge'
@@ -98,13 +99,12 @@ echo '<br>Match gevonden in products!';
 
 foreach($json4 as $item4) {
     
+	//Producten beperken tot enkel de 'switches', deze hebben id 2
 	if ($item4['category'] == '2') {
 		echo '<br>'.$item4['description'].' - '.$item4['id'].'<br>';
 		
-		
-		
-//echo '<br><br>';
 
+//
 foreach($merge as $m1) {
     
 		
@@ -127,16 +127,12 @@ foreach($merge as $m1) {
 	
 } // End foreach 'merge'
 		
-echo '<br>';		
+echo '<br>';
 		
 		
-		
-		
-		
-		
-	}
+	} // End if 'item4'
 	
-}
+} // End foreach 'json4'
 
 	
 	
@@ -147,8 +143,8 @@ echo '<br>';
 echo '<br><br>';
 
 echo '<strong><u>Vraag 3:</u></strong><br>';
-echo '<br>Match gevonden in products!';
 
+//Tellen van aantal producten die in aanmerking komen
 $i = 0;
 foreach($json4 as $item5) {
     
@@ -158,11 +154,15 @@ foreach($json4 as $item5) {
 	}
 	
 }
-
+        
+		//Check om te zien of er meer of gelijk aan 2 items in de loop zitten
         if($i >= 2) {
-		    echo '<br><br>2 of meer items in de loop<br>';
+		    echo '<br><br>2 of meer items in de loop, dus we kunnen verder<br>';
+			echo '<br>Match gevonden in products!<br>';
 
-		
+
+
+//Laten zien welke producten in aanmerking komen		
 foreach($json4 as $item5) {
 		
 	if ($item5['category'] == '1') {
@@ -173,7 +173,8 @@ foreach($json4 as $item5) {
 
 echo '<br><br>';
 
-        foreach ($json4 as $k => $v) {
+        //Zoeken naar het goedkooopste product en discount berekenen
+		foreach ($json4 as $k => $v) {
 	       if ($v['category'] == '1') {
                $tArray[$k] = $v['price'];
 	       }
@@ -181,14 +182,14 @@ echo '<br><br>';
         $cheapest = min($tArray);
 		$discount1 = ($cheapest * 20)/100;
 		$disc_tot = $cheapest - $discount1;
-		echo $disc_tot;
+		echo 'Cheapest price with discount: '.$disc_tot;
 
 			
 			
 			
-			
+		//Geen 2 items in de loop? Dan stopt het hier	
 		} else {
-			echo '<br>Minder dan 2 in de loop';
+			echo '<br>Minder dan 2 in de loop, hier stopt het';
 		}
 
 ?>
