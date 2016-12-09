@@ -63,6 +63,7 @@ foreach($merge as $m) {
     if ($m['customer-id'] == $item['id']) {
 	    echo '<br>Match gevonden in orders!';
 		echo '<br>name: '.$item['name'];
+		echo '<br>Order total: '.$m['total'];
 		
           //Indien [total] geen key zou zijn in array kan onderstaande gebruikt worden,
 		  //deze code zal dan de 3 regels onder deze blok vervangen
@@ -76,7 +77,7 @@ foreach($merge as $m) {
 		
 		$discount = ($m['total'] * 10) / 100;
 		$new_total = $m['total'] - $discount;
-		echo '<br>Total with discount: '.$new_total;
+		echo '<br>Order total with discount: '.$new_total;
     }
 	
 } // End foreach 'merge'
@@ -104,14 +105,15 @@ foreach($json4 as $item4) {
 		echo '<br>'.$item4['description'].' - '.$item4['id'].'<br>';
 		
 
-//
+//Checken of we hier order hebben waar switches in zitten
+//Rekening houden ook met de gratis switchen vanaf 5 stuks, 10 stuks, ...
 foreach($merge as $m1) {
     
 		
 		  foreach($m1['items'] as $it1) {
 			  if($item4['id'] == $it1['product-id']) {
 			     //echo '<br>Match gevonden in orders!<br>';
-				 echo '<br>'.$it1['product-id'].' - '.$it1['quantity'];
+				 echo '<br>'.$it1['product-id'].' - '.$it1['quantity'].' stuks';
 				 
 				 if (($it1['quantity'] >= 5) && $it1['quantity'] < 10) {
 					 echo '<br>+ extra switch gratis<br>';
@@ -119,7 +121,7 @@ foreach($merge as $m1) {
 				 if (($it1['quantity'] >= 10) && $it1['quantity'] < 20) {
 					 echo '<br>+ 2 extra switchen gratis<br>';
 				 }
-				 
+				 //...
 				 
 		      }
 		  }
@@ -182,6 +184,7 @@ echo '<br><br>';
         $cheapest = min($tArray);
 		$discount1 = ($cheapest * 20)/100;
 		$disc_tot = $cheapest - $discount1;
+		echo 'Cheapest price: '.$cheapest.'<br>';
 		echo 'Cheapest price with discount: '.$disc_tot;
 
 			
